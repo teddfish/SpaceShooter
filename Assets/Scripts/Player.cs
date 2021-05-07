@@ -7,7 +7,12 @@ public class Player : MonoBehaviour
     //declaring a speed variable to give the movement speed to the player object
     [SerializeField]
     float _speed = 10f;
-    [SerializeField] GameObject _laserPrefab;
+    [SerializeField]
+    GameObject _laserPrefab;
+    Vector3 _laserSpawnOffset;
+    [SerializeField]
+    float _fireRate = 0.2f;
+    float _canFire = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,19 +20,14 @@ public class Player : MonoBehaviour
         //positioning the position of the cube in the centre
         //taking the current position and setting it to a new position of (0, 0, 0)
         //transform.position = new Vector3(0, 0, 0);
+        _laserSpawnOffset = new Vector3(0, 1f, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerMovement();
-
-        //if pressed space bar
-        //spawn a laser
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-        }
+        Shoot();
     }
 
     void PlayerMovement()
@@ -85,6 +85,17 @@ public class Player : MonoBehaviour
         else if (transform.position.x < -11f)
         {
             transform.position = new Vector3(11f, transform.position.y, transform.position.z);
+        }
+    }
+
+    void Shoot()
+    {
+        //if pressed space bar
+        //spawn a laser
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            _canFire = Time.time + _fireRate;
+            Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
         }
     }
 }
