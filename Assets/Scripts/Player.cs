@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     //declaring a speed variable to give the movement speed to the player object
     [SerializeField]
-    float speed = 10f;
+    float _speed = 10f;
+    [SerializeField] GameObject _laserPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+
+        //if pressed space bar
+        //spawn a laser
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     void PlayerMovement()
@@ -36,7 +44,7 @@ public class Player : MonoBehaviour
         //translating the position of the cube by multiplying the direction vector with the movement speed variable 
         //and by real time multiplier value
         //Time.deltaTime is the time taken by the computer to render the previous frame
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.Translate(direction * _speed * Time.deltaTime);
 
         #region vertical bounds method1
         //an if statement is fairly straightforward, here we need to check if the player position is inside 
@@ -62,9 +70,11 @@ public class Player : MonoBehaviour
         #endregion
 
         #region vertical bounds method2
+
         //here, instead of an if statement check, the y value is simply clamped to the 
         //upper and lower screen bounds using Mathf.Clamp
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4f, 0f), transform.position.z);
+
         #endregion
 
         //different if statement for a different parameter
