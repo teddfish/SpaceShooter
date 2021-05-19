@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] float _enemySpeed = 4f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +14,12 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * 4 * Time.deltaTime);
+        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
 
         if (transform.position.y < -11f)
         {
-            transform.position = new Vector3(Random.Range(-9f, 9f), 8f, transform.position.z);
+            float randomX = Random.Range(-9f, 9f);
+            transform.position = new Vector3(randomX, 8f, transform.position.z);
         }
     }
 }
