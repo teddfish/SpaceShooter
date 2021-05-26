@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     float _fireRate = 0.2f;
     float _canFire = 0f;
 
+    [SerializeField]
+    int _lives = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,18 +35,11 @@ public class Player : MonoBehaviour
 
     void PlayerMovement()
     {
-        //here we get inputs from the player for the horizontal axis, 1 for right and -1 for left
         float horizontalInput = Input.GetAxis("Horizontal");
-        //here we get inputs from player for the vertical axis, 1 for up and -1 for down
         float verticalInput = Input.GetAxis("Vertical");
 
-        //this vector uses our horizontalInput for the x value, verticalInput for the y value and 0 for z value
-        //this will give us all our WASD inputs in one single vector3 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        //translating the position of the cube by multiplying the direction vector with the movement speed variable 
-        //and by real time multiplier value
-        //Time.deltaTime is the time taken by the computer to render the previous frame
         transform.Translate(direction * _speed * Time.deltaTime);
 
         #region vertical bounds method1
@@ -96,6 +92,16 @@ public class Player : MonoBehaviour
         {
             _canFire = Time.time + _fireRate;
             Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
+        }
+    }
+
+    public void Damage()
+    {
+        _lives -= 1;
+
+        if (_lives < 1)
+        {
+            Destroy(this.gameObject);
         }
     }
 }
