@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     float _speed = 10f;
     [SerializeField]
-    GameObject _laserPrefab;
+    GameObject _laserPrefab, _tripleShotPrefab;
     Vector3 _laserSpawnOffset;
     [SerializeField]
     float _fireRate = 0.2f;
@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     int _lives = 3;
 
     SpawnManager _spawnManager;
+
+    [SerializeField]
+    bool _isTripleShotActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,9 +42,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
-        Shoot();
-    }
 
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            Shoot();
+        }
+    }
     void PlayerMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -95,11 +101,14 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        //if pressed space bar
-        //spawn a laser
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        _canFire = Time.time + _fireRate;
+        if (_isTripleShotActive)
         {
-            _canFire = Time.time + _fireRate;
+            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+
+        }
+        else
+        {
             Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
         }
     }
