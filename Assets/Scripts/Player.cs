@@ -123,4 +123,16 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void ActivateTripleShot()
+    {
+        _isTripleShotActive = true;
+        StartCoroutine(DeactivateTripleShot());
+    }
+
+    IEnumerator DeactivateTripleShot()
+    {
+        yield return new WaitForSeconds(5f);
+        _isTripleShotActive = false;
+    }
 }
