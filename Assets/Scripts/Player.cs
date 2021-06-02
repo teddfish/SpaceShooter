@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     //declaring a speed variable to give the movement speed to the player object
     [SerializeField]
-    float _speed = 10f;
+    float _speed = 10f, _boostSpeed = 15f, _defaultSpeed = 10f;
     [SerializeField]
     GameObject _laserPrefab, _tripleShotPrefab;
     Vector3 _laserSpawnOffset;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     SpawnManager _spawnManager;
 
-    [SerializeField]
+    bool _isSpeedBoostActive = false;
     bool _isTripleShotActive = false;
 
     // Start is called before the first frame update
@@ -134,5 +134,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedBoost()
+    {
+        _isSpeedBoostActive = true;
+        _speed = _boostSpeed;
+        StartCoroutine(DeactivateSpeedBoost());
+    }
+
+    IEnumerator DeactivateSpeedBoost()
+    {
+        yield return new WaitForSeconds(5f);
+        _speed = _defaultSpeed;
+        _isSpeedBoostActive = false;
     }
 }
