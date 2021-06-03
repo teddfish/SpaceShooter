@@ -26,6 +26,11 @@ public class Player : MonoBehaviour
     bool _isTripleShotActive = false;
     bool _isShieldActive = false;
 
+    [SerializeField]
+    int _score;
+
+    UIManager _uiManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,10 +40,15 @@ public class Player : MonoBehaviour
         _laserSpawnOffset = new Vector3(0, 1f, 0);
 
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager cannot be referenced!");
+        }
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager cannot be referenced!");
         }
     }
 
@@ -127,6 +137,7 @@ public class Player : MonoBehaviour
         }
 
         _lives -= 1;
+        _uiManager.UpdateLivesDisplay(_lives);
 
         if (_lives < 1)
         {
@@ -165,5 +176,15 @@ public class Player : MonoBehaviour
     {
         _shieldObject.SetActive(true);
         _isShieldActive = true;
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+    }
+
+    public int GetScore()
+    {
+        return _score;
     }
 }
