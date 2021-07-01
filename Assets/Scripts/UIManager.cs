@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     Player player;
 
+    bool canRestart = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    void AfterGameOver()
+    {
 
+    }
 
     IEnumerator StartFlicker()
     {
