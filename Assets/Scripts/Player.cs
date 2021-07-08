@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject _shieldObject;
 
+    [SerializeField]
+    GameObject  _lEngine, _rEngine;
+
     SpawnManager _spawnManager;
 
     bool _isSpeedBoostActive = false;
@@ -137,12 +140,27 @@ public class Player : MonoBehaviour
         }
 
         _lives -= 1;
+
+        DamageWings();
+
         _uiManager.UpdateLivesDisplay(_lives);
 
         if (_lives < 1)
         {
             _spawnManager.WhenPlayerDies();
             Destroy(this.gameObject);
+        }
+    }
+
+    void DamageWings()
+    {
+        if (_lives == 2)
+        {
+            _lEngine.SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _rEngine.SetActive(true);
         }
     }
 
