@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     Player _player;
     Animator _enemyAnim;
 
+    AudioManager _audioManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,11 @@ public class Enemy : MonoBehaviour
         if (_enemyAnim == null)
         {
             Debug.LogError("Animator cannot be referenced");
+        }
+        _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (_audioManager == null)
+        {
+            Debug.LogError("Audio Manager cannot be referenced");
         }
     }
 
@@ -49,8 +56,11 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
+            
             _enemyAnim.SetTrigger("DestroyEnemy");
+            _audioManager.TriggerExplosionSound();
             _enemySpeed = 0;
+            GetComponent<BoxCollider2D>().enabled = false;
             Destroy(this.gameObject, 2.5f);
         }
 
@@ -65,8 +75,11 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
+
             _enemyAnim.SetTrigger("DestroyEnemy");
+            _audioManager.TriggerExplosionSound();
             _enemySpeed = 0;
+            GetComponent<BoxCollider2D>().enabled = false;
             Destroy(this.gameObject, 2.5f);
         }
     }

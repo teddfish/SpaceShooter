@@ -34,7 +34,10 @@ public class Player : MonoBehaviour
 
     UIManager _uiManager;
 
-    // Start is called before the first frame update
+    AudioSource _audioSrc;
+    [SerializeField]
+    AudioClip _laserSound;
+
     void Start()
     {
         //positioning the position of the cube in the centre
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
 
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSrc = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -52,6 +56,10 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("UI Manager cannot be referenced!");
+        }
+        if (_audioSrc == null)
+        {
+            Debug.LogError("Audio Source on player cannot be referenced!");
         }
     }
 
@@ -119,6 +127,7 @@ public class Player : MonoBehaviour
     void Shoot()
     {
         _canFire = Time.time + _fireRate;
+
         if (_isTripleShotActive)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -128,6 +137,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
         }
+
+        _audioSrc.PlayOneShot(_laserSound);
     }
 
     public void Damage()
