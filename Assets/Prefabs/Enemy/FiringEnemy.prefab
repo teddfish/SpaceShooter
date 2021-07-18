@@ -164,5 +164,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpeed: 4
-  _laserPrefab: {fileID: 1856390431972381177, guid: 7c9641eb2712cf742ad0d875b2946d2e,
+  _laserPrefab: {fileID: 3609674336814722359, guid: 9ed7dbab371db114ab2a3ebaf96b2bed,
     type: 3}

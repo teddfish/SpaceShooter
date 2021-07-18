@@ -11,14 +11,16 @@ public class EnemyFire : Enemy
     float _canFire = -1f;
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        if (Time.time > _canFire)
+        base.Update();
+
+        if (Time.time > _canFire && this.GetComponent<BoxCollider2D>().enabled)
         {
             _fireRate = Random.Range(3f, 7f);
             _canFire = _fireRate + Time.time;
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Debug.Break();
+            Vector3 _spawnPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+            GameObject enemyLaser = Instantiate(_laserPrefab, _spawnPosition, Quaternion.identity);
         }
     }
 }
