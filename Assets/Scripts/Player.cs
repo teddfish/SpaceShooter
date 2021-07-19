@@ -15,10 +15,10 @@ public class Player : MonoBehaviour
     float _canFire = 0f;
 
     [SerializeField]
-    int _lives = 3;
+    int _lives = 3, _shieldStrength = 3;
 
     [SerializeField]
-    GameObject _shieldObject;
+    GameObject _shieldObject, _shield50, _shield25;
 
     [SerializeField]
     GameObject  _lEngine, _rEngine;
@@ -155,8 +155,31 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            _shieldObject.SetActive(false);
-            _isShieldActive = false;
+            if (_shieldStrength == 0)
+            {
+                _shieldStrength = 3;
+            }
+
+            _shieldStrength -= 1;
+
+            if (_shieldStrength == 2)
+            {
+                _shieldObject.SetActive(false);
+                _shield50.SetActive(true);
+            }
+            else if (_shieldStrength == 1)
+            {
+                _shield25.SetActive(true);
+                _shield50.SetActive(false);
+            }
+
+            if (_shieldStrength < 1)
+            {
+                _shield25.SetActive(false);
+                _isShieldActive = false;
+                return;
+            }
+
             return;
         }
 
