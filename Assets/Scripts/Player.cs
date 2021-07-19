@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
             //normal movement code
             transform.Translate(direction * _speed * Time.deltaTime);
         }
+        //checking if git still works
 
         #region vertical bounds method1
         //an if statement is fairly straightforward, here we need to check if the player position is inside 
