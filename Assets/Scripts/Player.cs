@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     //declaring a speed variable to give the movement speed to the player object
     [SerializeField]
-    float _speed = 10f, _boostSpeed = 15f, _defaultSpeed = 10f;
+    float _speed = 10f, _boostSpeed = 15f, _defaultSpeed = 10f, _thrusterModifier = 5f;
     [SerializeField]
     GameObject _laserPrefab, _tripleShotPrefab;
     Vector3 _laserSpawnOffset;
@@ -80,7 +80,16 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(direction * _speed * Time.deltaTime);
+        //adding thruster boost if left shift pressed
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(direction * (_speed * _thrusterModifier) * Time.deltaTime);
+        }
+        else
+        {
+            //normal movement code
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
         #region vertical bounds method1
         //an if statement is fairly straightforward, here we need to check if the player position is inside 

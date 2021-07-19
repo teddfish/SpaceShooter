@@ -1897,6 +1897,7 @@ MonoBehaviour:
   _speed: 10
   _boostSpeed: 15
   _defaultSpeed: 10
+  _thrusterModifier: 2
   _laserPrefab: {fileID: 2526491117542463524, guid: 677ecef4550c6e645a54064fdb74da0e,
     type: 3}
   _tripleShotPrefab: {fileID: 9159095664302193628, guid: 5b89e72f4e5fd864e8692a3c7cd7edc8,
