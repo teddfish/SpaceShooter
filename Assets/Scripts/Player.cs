@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
         {
             _audioSrc.PlayOneShot(_outOfAmmo);
         }
+        //print(_ammoAvailable);
     }
     void PlayerMovement()
     {
@@ -156,7 +157,12 @@ public class Player : MonoBehaviour
         }
 
         _audioSrc.PlayOneShot(_laserSound);
-        _ammoAvailable -= 1;
+
+        if (_ammoAvailable != 0)
+        {
+            _ammoAvailable -= 1;
+        }
+        
     }
 
     public void Damage()
