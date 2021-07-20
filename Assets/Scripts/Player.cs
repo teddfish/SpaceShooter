@@ -47,6 +47,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject _laserBeamObject;
 
+    //thrusting
+    bool _canThrust = true;
+    
+
     void Start()
     {
         //positioning the position of the cube in the centre
@@ -85,7 +89,7 @@ public class Player : MonoBehaviour
         {
             _audioSrc.PlayOneShot(_outOfAmmo);
         }
-        //print(_ammoAvailable);
+        print(_canThrust);
     }
     void PlayerMovement()
     {
@@ -95,9 +99,11 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         //adding thruster boost if left shift pressed
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && _canThrust)
         {
             transform.Translate(direction * (_speed * _thrusterModifier) * Time.deltaTime);
+            _uiManager.UseThrust(0.45f);
+            StartCoroutine(DeactivateThrusting());
         }
         else
         {
@@ -287,6 +293,20 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _isBeamLaserActive = false;
         _laserBeamObject.SetActive(false);
+    }
+
+    IEnumerator DeactivateThrusting()
+    {
+        yield return new WaitForSeconds(2f);
+        _uiManager.StartThrustRegen();
+        _canThrust = false;
+        StartCoroutine(ActivateThrusting());
+    }
+
+    IEnumerator ActivateThrusting()
+    {
+        yield return new WaitForSeconds(4f);
+        _canThrust = true;
     }
 
     public void AddScore(int points)

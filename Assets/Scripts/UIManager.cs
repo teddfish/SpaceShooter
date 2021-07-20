@@ -17,10 +17,20 @@ public class UIManager : MonoBehaviour
 
     bool canRestart = false;
 
+    [SerializeField]
+    Slider _thrustBar;
+    float _maxThrust = 100;
+    float _currentThrust;
+    WaitForSeconds _regenTime = new WaitForSeconds(4f);
+
+
     // Start is called before the first frame update
     void Start()
     {
          player = GameObject.Find("Player").GetComponent<Player>();
+        _currentThrust = _maxThrust;
+        _thrustBar.maxValue = _maxThrust;
+        _thrustBar.value = _maxThrust;
     }
 
     // Update is called once per frame
@@ -53,11 +63,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void AfterGameOver()
-    {
-
-    }
-
     IEnumerator StartFlicker()
     {
         yield return new WaitForSeconds(0.5f);
@@ -70,5 +75,32 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _gameOverText.gameObject.SetActive(true);
         StartCoroutine(StartFlicker());
+    }
+
+    public void UseThrust(float amount)
+    {
+        if (_currentThrust - amount >= 0)
+        {
+            _currentThrust -= amount;
+            _thrustBar.value = _currentThrust;
+        }
+    }
+
+    public void StartThrustRegen()
+    {
+        StartCoroutine(RegenThrust());
+    }
+
+    IEnumerator RegenThrust()
+    {
+        yield return new WaitForSeconds(3.8f);
+
+        while (_currentThrust < _maxThrust)
+        {
+            _currentThrust += _maxThrust / 100;
+            _thrustBar.value = _currentThrust;
+
+            yield return _regenTime;
+        }
     }
 }
