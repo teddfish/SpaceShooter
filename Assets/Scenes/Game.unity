@@ -2147,6 +2147,7 @@ MonoBehaviour:
   _rEngine: {fileID: 1301042552}
   _score: 0
   _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _outOfAmmo: {fileID: 8300000, guid: 25f2895528ec2f942b75b4e090cdfd4f, type: 3}
 --- !u!212 &1911208740
 SpriteRenderer:
   m_ObjectHideFlags: 0

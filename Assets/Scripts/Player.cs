@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     int _lives = 3, _shieldStrength = 3;
 
+    //adding different visuals for different shield strength
     [SerializeField]
     GameObject _shieldObject, _shield50, _shield25;
 
@@ -36,7 +37,10 @@ public class Player : MonoBehaviour
 
     AudioSource _audioSrc;
     [SerializeField]
-    AudioClip _laserSound;
+    AudioClip _laserSound, _outOfAmmo;
+
+    //ammo count mechanic
+    int _ammoAvailable = 15;
 
     void Start()
     {
@@ -68,9 +72,13 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable > 0)
         {
             Shoot();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable < 1)
+        {
+            _audioSrc.PlayOneShot(_outOfAmmo);
         }
     }
     void PlayerMovement()
@@ -149,6 +157,7 @@ public class Player : MonoBehaviour
         }
 
         _audioSrc.PlayOneShot(_laserSound);
+        _ammoAvailable -= 1;
     }
 
     public void Damage()
