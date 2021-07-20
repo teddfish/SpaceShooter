@@ -155,11 +155,6 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            if (_shieldStrength == 0)
-            {
-                _shieldStrength = 3;
-            }
-
             _shieldStrength -= 1;
 
             if (_shieldStrength == 2)
@@ -238,6 +233,7 @@ public class Player : MonoBehaviour
     {
         _shieldObject.SetActive(true);
         _isShieldActive = true;
+        _shieldStrength = 3;
     }
 
     public void AddScore(int points)
