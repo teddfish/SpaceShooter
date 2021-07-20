@@ -13,7 +13,8 @@ public class Powerup : MonoBehaviour
         TripleShot,
         Speed,
         Shield,
-        Ammo
+        Ammo,
+        Health
     }
 
     private void Start()
@@ -56,6 +57,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case Powerups.Ammo:
                         player.ActivateAmmoRefill();
+                        break;
+                    case Powerups.Health:
+                        player.ActivateHealthPickup();
                         break;
                 }
                 

@@ -194,7 +194,7 @@ public class Player : MonoBehaviour
 
         _lives -= 1;
 
-        DamageWings();
+        UpdateWings();
 
         _uiManager.UpdateLivesDisplay(_lives);
 
@@ -205,15 +205,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    void DamageWings()
+    void UpdateWings()
     {
         if (_lives == 2)
         {
             _lEngine.SetActive(true);
+            _rEngine.SetActive(false);
         }
         else if (_lives == 1)
         {
             _rEngine.SetActive(true);
+        }
+        else if (_lives == 3)
+        {
+            _lEngine.SetActive(false);
+            _rEngine.SetActive(false);
         }
     }
 
@@ -253,6 +259,17 @@ public class Player : MonoBehaviour
     public void ActivateAmmoRefill()
     {
         _ammoAvailable = 15;
+    }
+
+    public void ActivateHealthPickup()
+    {
+        int _totalLives = 3;
+        if (_lives < _totalLives)
+        {
+            _lives += 1;
+            _uiManager.UpdateLivesDisplay(_lives);
+            UpdateWings();
+        }
     }
 
     public void AddScore(int points)
