@@ -12,7 +12,8 @@ public class Powerup : MonoBehaviour
     {
         TripleShot,
         Speed,
-        Shield
+        Shield,
+        Ammo
     }
 
     private void Start()
@@ -52,6 +53,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case Powerups.Shield:
                         player.ActivateShields();
+                        break;
+                    case Powerups.Ammo:
+                        player.ActivateAmmoRefill();
                         break;
                 }
                 
