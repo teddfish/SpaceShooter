@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     bool _isSpeedBoostActive = false;
     bool _isTripleShotActive = false;
     bool _isShieldActive = false;
+    bool _isBeamLaserActive = false;
 
     [SerializeField]
     int _score;
@@ -41,6 +42,10 @@ public class Player : MonoBehaviour
 
     //ammo count mechanic
     int _ammoAvailable = 15;
+
+    //for laser beam
+    [SerializeField]
+    GameObject _laserBeamObject;
 
     void Start()
     {
@@ -72,11 +77,11 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable > 0 && !_isBeamLaserActive)
         {
             Shoot();
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable < 1)
+        else if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable < 1 && !_isBeamLaserActive)
         {
             _audioSrc.PlayOneShot(_outOfAmmo);
         }
@@ -149,9 +154,8 @@ public class Player : MonoBehaviour
         if (_isTripleShotActive)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-
         }
-        else
+        else 
         {
             Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
         }
@@ -270,6 +274,19 @@ public class Player : MonoBehaviour
             _uiManager.UpdateLivesDisplay(_lives);
             UpdateWings();
         }
+    }
+    public void ActivateBeamLaser()
+    {
+        _isBeamLaserActive = true;
+        _laserBeamObject.SetActive(true);
+        StartCoroutine(DeactivateBeamLaser());
+    }
+
+    IEnumerator DeactivateBeamLaser()
+    {
+        yield return new WaitForSeconds(5f);
+        _isBeamLaserActive = false;
+        _laserBeamObject.SetActive(false);
     }
 
     public void AddScore(int points)

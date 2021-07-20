@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     GameObject _enemyParent;
     [SerializeField]
     GameObject[] powerups;
+    [SerializeField]
+    GameObject _beamLaser;
 
     bool _stopSpawning = false;
 
@@ -17,6 +19,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerup());
+        StartCoroutine(SpawnBeamLaser());
     }
 
     IEnumerator SpawnEnemy()
@@ -44,6 +47,19 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3, 8));
         }
 
+    }
+
+    IEnumerator SpawnBeamLaser()
+    {
+        yield return new WaitForSeconds(2f);
+
+        while (!_stopSpawning)
+        {
+            Vector3 spawnPosition = new Vector3(Random.Range(-9f, 9f), 6.5f, 0);
+            GameObject newEnemy = Instantiate(_beamLaser, spawnPosition, Quaternion.identity);
+            newEnemy.transform.parent = _enemyParent.transform;
+            yield return new WaitForSeconds(Random.Range(40, 80));
+        }
     }
 
     public void WhenPlayerDies()

@@ -87,5 +87,20 @@ public class Enemy : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             Destroy(this.gameObject, 2.5f);
         }
+
+        else if (other.CompareTag("LaserBeam"))
+        {
+
+            if (_player != null)
+            {
+                _player.AddScore(10);
+            }
+
+            _enemyAnim.SetTrigger("DestroyEnemy");
+            _audioManager.TriggerExplosionSound();
+            _enemySpeed = 0;
+            GetComponent<BoxCollider2D>().enabled = false;
+            Destroy(this.gameObject, 2.5f);
+        }
     }
 }

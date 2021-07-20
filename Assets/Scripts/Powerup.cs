@@ -14,7 +14,8 @@ public class Powerup : MonoBehaviour
         Speed,
         Shield,
         Ammo,
-        Health
+        Health,
+        BeamLaser
     }
 
     private void Start()
@@ -60,6 +61,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case Powerups.Health:
                         player.ActivateHealthPickup();
+                        break;
+                    case Powerups.BeamLaser:
+                        player.ActivateBeamLaser();
                         break;
                 }
                 
