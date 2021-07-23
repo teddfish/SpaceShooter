@@ -18,10 +18,13 @@ public class UIManager : MonoBehaviour
     bool canRestart = false;
 
     [SerializeField]
+    Image barImage;
+    [SerializeField]
     Slider _thrustBar;
+    float _minThrust = 0;
     float _maxThrust = 100;
     float _currentThrust;
-    WaitForSeconds _regenTime = new WaitForSeconds(4f);
+    float _thrustRegenAmount = 100f;
 
 
     // Start is called before the first frame update
@@ -29,6 +32,7 @@ public class UIManager : MonoBehaviour
     {
          player = GameObject.Find("Player").GetComponent<Player>();
         _currentThrust = _maxThrust;
+        _thrustBar.minValue = _minThrust;
         _thrustBar.maxValue = _maxThrust;
         _thrustBar.value = _maxThrust;
     }
@@ -48,6 +52,7 @@ public class UIManager : MonoBehaviour
         {
             Application.Quit();
         }
+
     }
 
     public void UpdateLivesDisplay(int livesCounter)
@@ -79,28 +84,30 @@ public class UIManager : MonoBehaviour
 
     public void UseThrust(float amount)
     {
-        if (_currentThrust - amount >= 0)
+        _currentThrust -= amount * Time.deltaTime;
+        _thrustBar.value = _currentThrust;
+        if (_thrustBar.minValue != 0)
         {
-            _currentThrust -= amount;
-            _thrustBar.value = _currentThrust;
+            _thrustBar.value = 0;
         }
     }
 
     public void StartThrustRegen()
     {
+        //_currentThrust += _thrustRegenAmount * Time.deltaTime;
+        //_thrustBar.value = _currentThrust;
         StartCoroutine(RegenThrust());
     }
 
     IEnumerator RegenThrust()
     {
-        yield return new WaitForSeconds(3.8f);
-
-        while (_currentThrust < _maxThrust)
+        yield return new WaitForSeconds(1);
+        _currentThrust += _thrustRegenAmount * Time.deltaTime;
+        _thrustBar.value = _currentThrust;
+        if (player._canThrust == true && barImage.fillAmount != 1)
         {
-            _currentThrust += _maxThrust / 100;
-            _thrustBar.value = _currentThrust;
-
-            yield return _regenTime;
+            barImage.fillAmount = 1;
         }
     }
+
 }

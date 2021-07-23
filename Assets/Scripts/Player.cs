@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Player : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
     GameObject _laserBeamObject;
 
     //thrusting
-    bool _canThrust = true;
+    public bool _canThrust = true;
     
 
     void Start()
@@ -102,7 +103,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && _canThrust)
         {
             transform.Translate(direction * (_speed * _thrusterModifier) * Time.deltaTime);
-            _uiManager.UseThrust(0.45f);
+            _uiManager.UseThrust(100f);
             StartCoroutine(DeactivateThrusting());
         }
         else
@@ -196,8 +197,13 @@ public class Player : MonoBehaviour
             {
                 _shield25.SetActive(false);
                 _isShieldActive = false;
+
+                CameraShaker.Instance.ShakeOnce(3f, 2f, .1f, .5f);
+
                 return;
             }
+
+            CameraShaker.Instance.ShakeOnce(3f, 2f, .1f, .5f);
 
             return;
         }
@@ -213,6 +219,8 @@ public class Player : MonoBehaviour
             _spawnManager.WhenPlayerDies();
             Destroy(this.gameObject);
         }
+
+        CameraShaker.Instance.ShakeOnce(3f, 2f, .1f, .5f);
     }
 
     void UpdateWings()
@@ -297,15 +305,15 @@ public class Player : MonoBehaviour
 
     IEnumerator DeactivateThrusting()
     {
-        yield return new WaitForSeconds(2f);
-        _uiManager.StartThrustRegen();
+        yield return new WaitForSeconds(1f);
         _canThrust = false;
+        _uiManager.StartThrustRegen();
         StartCoroutine(ActivateThrusting());
     }
 
     IEnumerator ActivateThrusting()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         _canThrust = true;
     }
 
