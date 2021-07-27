@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    Text _scoreText, _gameOverText, _restartText;
+    Text _scoreText, _gameOverText, _restartText, _ammoCount;
     [SerializeField]
     Image _livesDisplayImage;
     [SerializeField]
@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
         if (player != null)
         {
             _scoreText.text = "Score: " + player.GetScore();
+            _ammoCount.text = "Ammo: " + player.GetAmmoCount() + " / 15";
         }
         if (_restartText.IsActive() && Input.GetKeyDown(KeyCode.R))
         {
@@ -86,9 +87,9 @@ public class UIManager : MonoBehaviour
     {
         _currentThrust -= amount * Time.deltaTime;
         _thrustBar.value = _currentThrust;
-        if (_thrustBar.minValue != 0)
+        if (player._canThrust == false && barImage.fillAmount != 0)
         {
-            _thrustBar.value = 0;
+            barImage.fillAmount = 0; 
         }
     }
 

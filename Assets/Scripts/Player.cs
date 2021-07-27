@@ -326,4 +326,9 @@ public class Player : MonoBehaviour
     {
         return _score;
     }
+
+    public int GetAmmoCount()
+    {
+        return _ammoAvailable;
+    }
 }
