@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnBeamLaser()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(20f);
 
         while (!_stopSpawning)
         {

@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         {
             _audioSrc.PlayOneShot(_outOfAmmo);
         }
-        print(_canThrust);
+        //print(_canThrust);
     }
     void PlayerMovement()
     {
