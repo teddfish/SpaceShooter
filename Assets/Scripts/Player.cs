@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
     bool _isSpeedBoostActive = false;
     bool _isTripleShotActive = false;
     bool _isShieldActive = false;
-    bool _isBeamLaserActive = false;
+    bool _isBeamLaserActive = false;    
+    bool _isStunActive = false;              //stun powerup (more like a power down :p)
 
     [SerializeField]
     int _score;
@@ -50,7 +51,6 @@ public class Player : MonoBehaviour
 
     //thrusting
     public bool _canThrust = true;
-    
 
     void Start()
     {
@@ -80,7 +80,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
+        if (!_isStunActive)
+        {
+            PlayerMovement();
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoAvailable > 0 && !_isBeamLaserActive)
         {
@@ -265,6 +268,18 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _speed = _defaultSpeed;
         _isSpeedBoostActive = false;
+    }
+
+    public void ActivateStun()
+    {
+        _isStunActive = true;
+        StartCoroutine(DeactivateStun());
+    }
+
+    IEnumerator DeactivateStun()
+    {
+        yield return new WaitForSeconds(2f);
+        _isStunActive = false;
     }
 
     public void ActivateShields()

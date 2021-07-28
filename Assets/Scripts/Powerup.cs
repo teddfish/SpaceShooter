@@ -15,7 +15,8 @@ public class Powerup : MonoBehaviour
         Shield,
         Ammo,
         Health,
-        BeamLaser
+        BeamLaser,
+        Stun
     }
 
     private void Start()
@@ -64,6 +65,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case Powerups.BeamLaser:
                         player.ActivateBeamLaser();
+                        break;
+                    case Powerups.Stun:
+                        player.ActivateStun();
                         break;
                 }
                 

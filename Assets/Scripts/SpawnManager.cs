@@ -15,8 +15,16 @@ public class SpawnManager : MonoBehaviour
 
     bool _stopSpawning = false;
 
+    //spawning more enemies with each wave
+    float _canSpawn = -1;
+    float _spawnRate = 5;
+
     public void StartEnemyWave()
     {
+        //if (Time.time > _canSpawn)
+        //{
+        //    StartCoroutine(SpawnEnemy());
+        //}
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnBeamLaser());
@@ -28,10 +36,11 @@ public class SpawnManager : MonoBehaviour
 
         while (!_stopSpawning)
         {
+            //_canSpawn = Time.time + _spawnRate;
             Vector3 spawnPosition = new Vector3(Random.Range(-9f, 9f), 6.5f, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], spawnPosition, Quaternion.identity);
             newEnemy.transform.parent = _enemyParent.transform;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -45,6 +54,7 @@ public class SpawnManager : MonoBehaviour
             int randomPowerup = Random.Range(0, powerups.Length);
             Instantiate(powerups[randomPowerup], randomPos, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3, 8));
+            print(randomPowerup);
         }
 
     }

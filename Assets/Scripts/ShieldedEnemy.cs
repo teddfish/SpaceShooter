@@ -27,6 +27,13 @@ public class ShieldedEnemy : Enemy
             _shields.SetActive(false);
             _shieldActive = false;
         }
+        else if (_shieldActive && other.CompareTag("LaserBeam"))
+        {
+            _shields.SetActive(false);
+            _shieldActive = false;
+
+            base.OnTriggerEnter2D(other);
+        }
         else
         {
             base.OnTriggerEnter2D(other);
