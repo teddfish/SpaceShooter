@@ -273,6 +273,7 @@ public class Player : MonoBehaviour
     public void ActivateStun()
     {
         _isStunActive = true;
+        CameraShaker.Instance.ShakeOnce(4f, 1f, 2f, 1f);
         StartCoroutine(DeactivateStun());
     }
 
