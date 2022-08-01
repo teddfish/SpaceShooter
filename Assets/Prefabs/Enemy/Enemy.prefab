@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2008915271367388398}
-  - component: {fileID: 5162991024175188020}
   - component: {fileID: 4407156923891701612}
   - component: {fileID: 8860993912481404484}
   - component: {fileID: 7627845118442958834}
   - component: {fileID: 3899889720397978948}
+  - component: {fileID: 1122637520437354146}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5162991024175188020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5463076293713695982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdf66ba8c8e147d419554baef2297c77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemySpeed: 4
 --- !u!212 &4407156923891701612
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -164,3 +151,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1122637520437354146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463076293713695982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960e1fddef945a44089b21215c4da50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemySpeed: 4
